@@ -2,9 +2,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
-  name: 'TaskPage'
+  name: 'TaskPage',
+  computed: {
+    ...mapState('user', ['userId']),
+    ...mapState('task', ['allTasks'])
+  },
+  async created() {
+    await this.$store.dispatch('task/getAllTasks', this.userId);
+    console.log(this.allTasks);
+  }
 };
 </script>
 

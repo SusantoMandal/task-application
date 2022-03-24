@@ -1,2 +1,15 @@
 <div>
+  <h1>Tasks</h1>
+  <div>
+  <table class="table">
+    <tbody>
+      <tr v-for="task in allTasks" :key="task._id">
+        <td>
+          <input class="form-check-input" type="checkbox" :value="task.completed" id="taskStatus">
+        </td>
+        <td>{{ task.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 </div>
