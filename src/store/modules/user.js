@@ -1,4 +1,5 @@
 import axios from 'axios';
+import LocalStorage from '../../utils/storage/local-storage';
 
 const user = {
   namespaced: true,
@@ -23,7 +24,11 @@ const user = {
   mutations: {
     setUserId: (state, id) => {
       state.userId = id;
+      LocalStorage.setItem('Auth', id);
     }
+  },
+  getters: {
+    getUserId: (state) => state.userId || LocalStorage.getItem('Auth')
   }
 };
 

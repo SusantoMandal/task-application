@@ -2,7 +2,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'TaskPage',
@@ -11,11 +11,13 @@ export default {
       taskDescription: '',
       taskID: '',
       hideModalFooter: true,
-      hideModalheader: true
+      hideModalheader: true,
+      userId: null
     };
   },
   computed: {
-    ...mapState('user', ['userId']),
+    // ...mapState('user', ['userId']),
+    ...mapGetters('user', ['getUserId']),
     ...mapState('task', ['allTasks'])
   },
   methods: {
@@ -51,6 +53,12 @@ export default {
     }
   },
   async created() {
+    this.userId = this.getUserId;
+    if (this.userId == null) {
+      this.$router.push({
+        name: 'LoginPage'
+      });
+    }
     await this.$store.dispatch('task/getAllTasks', this.userId);
   }
 };
