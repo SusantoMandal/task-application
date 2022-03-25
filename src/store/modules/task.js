@@ -6,10 +6,10 @@ const task = {
     allTasks: null
   },
   actions: {
-    getAllTasks({ state }, id) {
+    getAllTasks({ state }, userId) {
       const config = {
         method: 'get',
-        url: `http://localhost:8000/user/${id}/tasks`,
+        url: `http://localhost:8000/user/${userId}/tasks`,
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
@@ -19,6 +19,54 @@ const task = {
       return request
         .then((result) => {
           state.allTasks = result.data;
+        })
+        .catch((error) => { console.error(error); throw error; });
+    },
+    updateTask(_, { userId, taskId }) {
+      const config = {
+        method: 'put',
+        url: `http://localhost:8000/user/${userId}/tasks/${taskId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      };
+      const request = axios(config);
+      request.catch((error) => { console.error(error); throw error; });
+    },
+    addTask({ dispatch }, { userId, description }) {
+      const data = {
+        description
+      };
+      const config = {
+        method: 'post',
+        url: `http://localhost:8000/user/${userId}/tasks`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
+        data
+      };
+      const request = axios(config);
+      return request
+        .then(async () => {
+          await dispatch('getAllTasks', userId);
+        })
+        .catch((error) => { console.error(error); throw error; });
+    },
+    deleteTask({ dispatch }, { userId, taskId }) {
+      const config = {
+        method: 'delete',
+        url: `http://localhost:8000/user/${userId}/tasks/${taskId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      };
+      const request = axios(config);
+      return request
+        .then(async () => {
+          await dispatch('getAllTasks', userId);
         })
         .catch((error) => { console.error(error); throw error; });
     }
