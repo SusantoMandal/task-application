@@ -4,7 +4,19 @@
 <script>
 
 export default {
-  name: 'HomePage'
+  name: 'HomePage',
+  methods: {
+    goToLoginPage() {
+      this.$router.push({
+        name: 'LoginPage'
+      });
+    },
+    goToRegisterPage() {
+      this.$router.push({
+        name: 'RegisterPage'
+      });
+    }
+  }
 };
 </script>
 

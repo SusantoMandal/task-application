@@ -9,7 +9,7 @@ const task = {
     getAllTasks({ state }, id) {
       const config = {
         method: 'get',
-        url: `http://localhost:8000/user/${id}/tasks`,
+        url: `http://localhost:8080/user/${id}/tasks`,
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
