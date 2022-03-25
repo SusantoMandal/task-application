@@ -7,13 +7,13 @@ const user = {
   },
   actions: {
     loginUser({ commit }, userData) {
-      return axios.post('http://localhost:8080/signin', userData)
+      return axios.post('http://localhost:8000/signin', userData)
         .then((response) => {
           commit('setUserId', response.data.id);
         });
     },
     registerUser({ commit }, userData) {
-      return axios.post('http://localhost:8080/signup', userData)
+      return axios.post('http://localhost:8000/signup', userData)
         .then((response) => {
           commit('setUserId', response.data.id);
         })
