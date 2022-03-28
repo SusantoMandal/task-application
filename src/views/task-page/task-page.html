@@ -1,49 +1,47 @@
 <div class="task-main">
-  <h1 class="task-header">Tasks</h1>
-
-  <b-button v-b-modal.add-task variant="outline-primary" class="ms-5 mb-1">Add Task</b-button>
-  <b-modal
-    id="add-task"
-    ref="add-task-modal"
-    centered
-    :hide-footer="hideModalFooter"
-    :hide-header="hideModalheader"
-    body-class="px-3 pb-5 d-flex flex-column justify-content-center align-items-center"
-    >
-    <h3 class="text-center modal-heading">Add Task</h3>
-    <div class="d-flex flex-column modal-container">
-      <label class="form-label" for="taskdescription">Example label</label>
-      <input type="text" class="form-control" id="taskdescription" placeholder="Task Description" v-model="taskDescription">
+  <div class="task-container">
+    <h3>TODO-LIST</h3>
+    <div class="task-badges">
+      <span class="badge bg-primary">Total : {{allTasks.length}}</span>
+      <span class="badge bg-success">Success : {{completedTask || 0}}</span>
+      <span class="badge bg-danger">Pending : {{allTasks.length - completedTask}}</span>
     </div>
-    <button class="btn btn-outline-primary modal-submit-btn" @click="addTask">Submit</button>
-  
-  </b-modal>
-
-  <div class="task-container d-flex" v-for="task in allTasks" :key="task._id">
-      <input 
+    <div class="form-group d-flex">
+      <input type="text" class ="task-add form-control" placeholder="Enter new task"v-model="taskDescription">
+      <b-icon icon="arrow-right" class="add-icon" aria-hidden="true" @click="addTask"></b-icon>
+    </div>
+    <div class="task-list container" v-for="task in allTasks" :key="task._id">
+      <div class ="row">
+        <div class="col-10"><p>{{task.description}}</p></div>
+        <div class="col-1">
+          <input 
         class="form-check-input "
         type="checkbox"
         v-model="task.completed"
         @click="changeTaskStatus(task._id)"
         id="taskStatus">
-    <p class="task-description">{{ task.description }}</p>
-    <b-button v-b-modal.delete-task size="sm" class="mb-2 ms-3" variant="outline-danger" @click="setTaskId(task._id)">
-      <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
-    </b-button>
+        </div>
+        <div class="col-1">
+          <b-button v-b-modal.delete-task size="sm" class="mb-2 ms-3" variant="outline-danger" @click="setTaskId(task._id)">
+            <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
+          </b-button>
+        </div>
+      </div>
+    </div>
+    <b-modal
+    id="delete-task"
+    class="delete-modal"
+    ref="delete-task-modal"
+    centered
+    :hide-footer="hideModalFooter"
+    :hide-header="hideModalheader"
+    body-class="px-3 pb-5 d-flex flex-column justify-content-center align-items-center"
+    >
+    <p class="modal-heading">Are you sure you want delete this task?</p>
+    <div class="d-flex delete-btn-confirm">
+      <button class="btn btn-outline-primary modal-submit-btn" @click="closeModal">No</button>
+      <button class="btn btn-outline-danger modal-submit-btn" @click="deleteTask">Yes</button>
+    </div>
+    </b-modal>
   </div>
-
-  <b-modal
-  id="delete-task"
-  ref="delete-task-modal"
-  centered
-  :hide-footer="hideModalFooter"
-  :hide-header="hideModalheader"
-  body-class="px-3 pb-5 d-flex flex-column justify-content-center align-items-center"
-  >
-  <p>Are you sure you want delete this task?</p>
-  <div class="d-flex">
-    <button class="btn btn-outline-primary modal-submit-btn" @click="closeModal">No</button>
-    <button class="btn btn-outline-danger modal-submit-btn" @click="deleteTask">Yes</button>
-  </div>
-  </b-modal>
 </div>

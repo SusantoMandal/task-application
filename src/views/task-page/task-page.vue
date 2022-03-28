@@ -18,7 +18,16 @@ export default {
   computed: {
     // ...mapState('user', ['userId']),
     ...mapGetters('user', ['getUserId']),
-    ...mapState('task', ['allTasks'])
+    ...mapState('task', ['allTasks']),
+    completedTask() {
+      let count = 0;
+      this.allTasks.forEach((element) => {
+        if (element.completed === true) {
+          count += 1;
+        }
+      });
+      return count;
+    }
   },
   methods: {
     setTaskId(taskId) {
@@ -34,7 +43,7 @@ export default {
       };
       await this.$store.dispatch('task/addTask', payload);
       this.taskDescription = '';
-      this.$refs['add-task-modal'].hide();
+      // this.$refs['add-task-modal'].hide();
     },
     async changeTaskStatus(taskId) {
       const payload = {
