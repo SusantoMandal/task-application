@@ -1,0 +1,35 @@
+.header-container {
+  width: 100%;
+  padding: 20px 15px;
+  justify-content: space-between;
+
+  .header-router {
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+
+    .home-icon {
+      color: black;
+      margin: 0px 6px;
+      font-size: 18px;
+    }
+
+    .header-home {
+      margin: 0px;
+      color: black;
+      font-size: 24px;
+      font-weight: 500;
+      // font-family: "Lucida Console", "Courier New", monospace;
+    }
+  }
+
+  .sign-btn-container {
+    margin: 0px 30px;
+
+    .btn {
+      margin: 0px 10px;
+      padding: 4px 16px;
+      border-radius: 17px;
+    }
+  }
+}

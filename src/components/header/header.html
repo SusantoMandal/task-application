@@ -1,0 +1,15 @@
+<div class="header-container d-flex">
+  <router-link class="header-router d-flex" to="/">
+    <i class="fa-solid fa-house home-icon"></i>
+    <p class="header-home">Home</p>
+  </router-link>
+
+  <div v-show="showSignButtons" class="sign-btn-container">
+    <button class="btn btn-outline-dark" @click="goToLoginPage">
+      Sign in
+    </button>
+    <button class="btn btn-outline-dark" @click="goToRegisterPage">
+      Sign up
+    </button>
+  </div>
+</div>

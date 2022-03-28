@@ -1,27 +1,27 @@
 <template src="./register-page.html"></template>
 
 <script>
+import LoginCard from '../../components/login-card/login-card.vue';
 
 export default {
   name: 'RegisterPage',
-  data() {
-    return {
-      userName: '',
-      password: '',
-      isNameValid: true
-    };
+  components: {
+    LoginCard
   },
   methods: {
-    async registerUser() {
+    async registerUser(userName, userPassword) {
       const payload = {
-        name: this.userName,
-        password: this.password
+        name: userName,
+        password: userPassword
       };
       await this.$store.dispatch('user/registerUser', payload);
       this.$router.push({
         name: 'TaskPage'
       });
     }
+  },
+  created() {
+    this.$store.commit('header/setShowSignButtons', false);
   }
 };
 

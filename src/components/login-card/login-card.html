@@ -1,0 +1,29 @@
+<div class="login-card-container d-flex">
+  <h3 class="login-header" v-show="mode==='register'">Register</h3>
+  <h3 class="login-header" v-show="mode==='login'">Login</h3>
+  <form>
+    <div class="user-name">
+      <label for="userName" class="form-label">Name</label>
+      <input type="text" class="form-control" id="userName" v-model="userId">
+    </div>
+    <div class="user-password">
+      <label for="userPassword" class="form-label">Enter Password</label>
+      <input type="password" class="form-control" id="userPassword" v-model="password">
+    </div>
+    <div v-if="mode==='register'" class="user-password">
+      <label for="confirmPassword" class="form-label">Confirm Password</label>
+      <input type="password" class="form-control" id="confirmPassword" v-model="confirmPassword">
+    </div>
+  </form>
+
+  <button type="submit" class="btn btn-outline-dark submit-btn" @click="emitToParent">Submit</button>
+  
+  <div class="create-account" v-if="mode==='register'">
+    <p class="create-account-heading">Already have an account?</p>
+    <router-link class="router-class" to="/login">Sign In</router-link>
+  </div>
+  <div class="create-account" v-if="mode==='login'">
+    <p class="create-account-heading">Create a new account?</p>
+    <router-link class="router-class" to="/register">Sign Up</router-link>
+  </div>
+</div>

@@ -5,17 +5,8 @@
 
 export default {
   name: 'HomePage',
-  methods: {
-    goToLoginPage() {
-      this.$router.push({
-        name: 'LoginPage'
-      });
-    },
-    goToRegisterPage() {
-      this.$router.push({
-        name: 'RegisterPage'
-      });
-    }
+  created() {
+    this.$store.commit('header/setShowSignButtons', true);
   }
 };
 </script>

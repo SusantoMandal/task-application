@@ -16,7 +16,6 @@ export default {
     };
   },
   computed: {
-    // ...mapState('user', ['userId']),
     ...mapGetters('user', ['getUserId']),
     ...mapState('task', ['allTasks'])
   },
@@ -53,6 +52,7 @@ export default {
     }
   },
   async created() {
+    this.$store.commit('header/setShowSignButtons', false);
     this.userId = this.getUserId;
     if (this.userId == null) {
       this.$router.push({
