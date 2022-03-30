@@ -8,6 +8,10 @@ html , body, main {
   height: 100%;
   font-size: 16px;
   font-family: 'Cabin', sans-serif;
+  background-image: url('../../assets/images/home-page.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
 }
 
 .app-container {
