@@ -43,6 +43,7 @@ export default {
       };
       await this.$store.dispatch('task/addTask', payload);
       this.taskDescription = '';
+      this.allTask();
       // this.$refs['add-task-modal'].hide();
     },
     async changeTaskStatus(taskId) {
@@ -58,6 +59,7 @@ export default {
         taskId: this.taskID
       };
       await this.$store.dispatch('task/deleteTask', payload);
+      this.allTask();
       this.$refs['delete-task-modal'].hide();
     },
     activeTask() {
