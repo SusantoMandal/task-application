@@ -12,7 +12,8 @@ export default {
       taskID: '',
       hideModalFooter: true,
       hideModalheader: true,
-      userId: null
+      userId: null,
+      tasks: []
     };
   },
   computed: {
@@ -58,6 +59,15 @@ export default {
       };
       await this.$store.dispatch('task/deleteTask', payload);
       this.$refs['delete-task-modal'].hide();
+    },
+    activeTask() {
+      this.tasks = this.allTasks.filter((task) => task.completed === false);
+    },
+    allTask() {
+      this.tasks = this.allTasks;
+    },
+    doneTask() {
+      this.tasks = this.allTasks.filter((task) => task.completed === true);
     }
   },
   async created() {
@@ -69,6 +79,7 @@ export default {
       });
     }
     await this.$store.dispatch('task/getAllTasks', this.userId);
+    this.tasks = this.allTasks;
   }
 };
 </script>
