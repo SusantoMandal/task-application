@@ -52,6 +52,7 @@ export default {
         taskId
       };
       await this.$store.dispatch('task/updateTask', payload);
+      this.task = this.allTasks;
     },
     async deleteTask() {
       const payload = {

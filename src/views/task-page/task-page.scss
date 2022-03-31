@@ -3,26 +3,34 @@
   // width: 100%;
   height: auto;
   border-radius: 5px;
-  margin: 0 10%;
-  padding-bottom: 40px;
-  // margin-top: 3%;
+  // margin: 0 10%;
+  // padding-bottom: 40px;
+  margin-top: 2%;
   // margin-bottom: 2%;
-  padding: 10px;
+  padding: 24px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  width: 65vw;
+  margin: 2% 0px 0px 40px;
+  .task-heading {
+    padding: 24px 24px 16px 0px;
+    color: #f0c44f;
+  }
   .task-badges {
     display: flex;
-    justify-content: space-evenly;
-    font-size: 1.5em;
+    margin: 0px 0px 16px;
+    font-size: 1.3em;
+  }
+  .task-badges > span {
+    margin-right: 32px;
   }
   .task-add{
-    margin-top: 7px;
-    width: -webkit-fill-available;
     height: 3em;
-    border: none;
-    border-color: transparent;
-    border-bottom: 1px solid blue;
-    margin-bottom: 10px;
+    // border: none;
+    // border-color: transparent;
+    // border-bottom: 1px solid blue;
+    width: 83%;
+    margin: 16px 0px;
   }
   .task-add:focus {
     box-shadow: none;
@@ -30,9 +38,20 @@
     border: none;
     border-bottom: 1px solid blue;
   }
-  .add-icon{
-    font-size: 25px;
-  margin: auto;
+  .add-btn {
+    border-radius: 17px;
+    .add-icon{
+      font-size: 2.2em;
+      margin: auto;
+      margin-left: 7px;
+      color: #7e977a;
+    }
+  }
+  
+  .task-link {
+    a:active {
+      color: yellow;
+  }
   }
   .task-list {
     display: flex;
@@ -45,12 +64,14 @@
     }
     .task-radio {
       flex-basis: 8%;
+      font-size: 1.3em;
       @include media-breakpoint-up(sm) {
-        flex-basis: 3%;
+        flex-basis: 5%;
       }
     }
     .task-description {
-      flex-basis: 70%;
+      flex-basis: 89%;
+      font-size: 18px;
       @include media-breakpoint-up(sm) {
         flex-basis: 80%;
       }
