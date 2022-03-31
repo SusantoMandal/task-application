@@ -1,6 +1,7 @@
 @import '@/assets/styles/_helpers.scss';
+
 .task-container {
-  // width: 100%;
+  width: 100%;
   height: auto;
   border-radius: 5px;
   // margin: 0 10%;
@@ -38,15 +39,17 @@
     border: none;
     border-bottom: 1px solid blue;
   }
-  .add-btn {
-    border-radius: 17px;
+  // .add-btn {
+  //   border-radius: 17px;
     .add-icon{
+      pointer-events: all;
+      cursor: pointer;
       font-size: 2.2em;
-      margin: auto;
+      // margin: auto;
       margin-left: 7px;
       color: #7e977a;
     }
-  }
+  // }
   
   .task-link {
     a:active {

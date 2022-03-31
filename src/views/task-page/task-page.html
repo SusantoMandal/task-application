@@ -1,4 +1,4 @@
-<div style="backdrop-filter: blur(3px);height:100%;">
+<!-- <div style="backdrop-filter: blur(3px);height:100%;"> -->
   <div class="task-container">
     <h3 class="task-heading">Track your task here</h3>
     <div class="task-badges">
@@ -8,9 +8,12 @@
     </div>
     <div class="form-group d-flex">
       <input type="text" class ="task-add form-control" placeholder="Enter new task"v-model="taskDescription" @keydown.enter="addTask">
-      <button class="add-btn" @click="addTask">
-        <i class="fa-solid fa-circle-plus add-icon" ></i>
-      </button>
+      <!-- <button class="add-btn" @click="addTask"> -->
+        <span @click="addTask" class="my-auto">
+          <i class="fa-solid fa-circle-plus add-icon"></i>
+        </span>
+        
+      <!-- </button> -->
       <!-- <b-icon icon="arrow-right" class="add-icon" aria-hidden="true" @click="addTask"></b-icon> -->
     </div>
     <div class="task-link d-flex">
@@ -50,4 +53,4 @@
     </div>
     </b-modal>
   </div>
-</div>
+<!-- </div> -->
