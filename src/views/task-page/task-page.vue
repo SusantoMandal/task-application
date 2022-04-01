@@ -32,6 +32,11 @@ export default {
   methods: {
     setTaskId(taskId) {
       this.taskID = taskId;
+      this.$bvToast.toast(this.taskDescription, {
+        title: 'Task added successfully!!',
+        variant: 'success',
+        solid: true
+      });
     },
     closeModal() {
       this.$refs['delete-task-modal'].hide();
@@ -44,7 +49,6 @@ export default {
       await this.$store.dispatch('task/addTask', payload);
       this.taskDescription = '';
       this.allTask();
-      // this.$refs['add-task-modal'].hide();
     },
     async changeTaskStatus(taskId) {
       const payload = {

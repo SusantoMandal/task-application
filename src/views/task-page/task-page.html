@@ -1,42 +1,63 @@
 <!-- <div style="backdrop-filter: blur(3px);height:100%;"> -->
   <div class="task-container">
-    <h3 class="task-heading">Track your task here</h3>
-    <div class="task-badges">
-      <span class="badge bg-primary">Total : {{allTasks.length}}</span>
-      <span class="badge bg-success">Success : {{completedTask || 0}}</span>
-      <span class="badge bg-danger">Pending : {{allTasks.length - completedTask}}</span>
-    </div>
-    <div class="form-group d-flex">
-      <input type="text" class ="task-add form-control" placeholder="Enter new task"v-model="taskDescription" @keydown.enter="addTask">
-      <!-- <button class="add-btn" @click="addTask"> -->
+    <div class="task-component">
+      <h1 class="task-heading">Track your task here</h1>
+
+      <div class="task-badges-container">
+        <span class="badge task-badges" style="background: rgb(18 83 255 / 25%); color: #031dff;">
+          Total : {{allTasks.length}}
+        </span>
+        <span class="badge task-badges" style="background: #13771338; color: green">
+          Success : {{completedTask || 0}}
+        </span>
+        <span class="badge task-badges" style="background: #ff00001f; color: #b71b1b;">
+          Pending : {{allTasks.length - completedTask}}
+        </span>
+      </div>
+
+      <div class="form-group d-flex add-task-form">
+        <input type="text" class ="task-input form-control" placeholder="Enter new task"v-model="taskDescription" @keydown.enter="addTask">
         <span @click="addTask" class="my-auto">
           <i class="fa-solid fa-circle-plus add-icon"></i>
         </span>
-        
-      <!-- </button> -->
-      <!-- <b-icon icon="arrow-right" class="add-icon" aria-hidden="true" @click="addTask"></b-icon> -->
-    </div>
-    <div class="task-link d-flex">
-      <a href="javascript:void(0)" style="padding: 0 8px; text-decoration: none;" @click="allTask">All</a>
-      <a href="javascript:void(0)" style="padding: 0 8px; text-decoration: none;" @click="activeTask">Active</a>
-      <a href="javascript:void(0)" style="padding: 0 8px; text-decoration: none;"@click="doneTask">Completed</a>
-    </div>
-    <div class="task-list container" v-for="task in tasks" :key="task._id">
-        <div class="task-radio">
+      </div>
+
+      <div class="task-link-container d-flex">
+        <a href="javascript:void(0)" class="task-link" @click="allTask">All</a>
+        <a href="javascript:void(0)" class="task-link" @click="activeTask">Active</a>
+        <a href="javascript:void(0)" class="task-link" @click="doneTask">Completed</a>
+      </div>
+
+      <div class="task-list-container" v-for="task in tasks" :key="task._id">
+        <div class="task-list">
           <input 
-        class="form-check-input "
-        type="checkbox"
-        v-model="task.completed"
-        @click="changeTaskStatus(task._id)"
-        id="taskStatus">
+          class="form-check-input task-checkbox"
+          type="checkbox"
+          v-model="task.completed"
+          @click="changeTaskStatus(task._id)"
+          id="taskStatus">
+          <p class="task-description" :class="{'task-status': task.completed}">
+            {{task.description}}
+          </p>
         </div>
-        <div :class="{'task-status': (task.completed),'task-description':true}"><p>{{task.description}}</p></div>
+
         <div class="task-delete">
           <b-button v-b-modal.delete-task size="sm" variant="outline-dark" @click="setTaskId(task._id)">
             <i class="fa-solid fa-trash"></i>
           </b-button>
         </div>
     </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
     <b-modal
     id="delete-task"
     class="delete-modal"
@@ -53,4 +74,3 @@
     </div>
     </b-modal>
   </div>
-<!-- </div> -->
