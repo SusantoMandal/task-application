@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import PageLoader from '@/components/page-loader/page-loader.vue';
+import PageLoader from './components/page-loader/page-loader.vue';
 import Header from './components/header/header.vue';
 
 export default {

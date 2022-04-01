@@ -12,7 +12,6 @@ export default {
       taskData: {
         taskDescription: ''
       },
-      taskID: '',
       hideModalFooter: true,
       hideModalheader: true,
       userId: null,
@@ -40,35 +39,24 @@ export default {
     }
   },
   methods: {
-    setTaskId(taskId) {
-      this.taskID = taskId;
-      this.$bvToast.toast(this.taskDescription, {
-        title: 'Task added successfully!!',
-        variant: 'success',
-        solid: true
-      });
-    },
-    closeModal() {
-      this.$refs['delete-task-modal'].hide();
-    },
     async addTask() {
       const payload = {
         userId: this.userId,
         description: this.taskData.taskDescription
       };
-      this.$store.dispatch('pageLoader/show');
+      // this.$store.dispatch('pageLoader/show');
       await this.$store.dispatch('task/addTask', payload);
-      this.taskData.taskDescription = '';
       this.allTask();
-      this.$store.dispatch('pageLoader/hide');
+      // this.$store.dispatch('pageLoader/hide');
       this.$bvToast.toast(this.taskData.taskDescription, {
         title: 'Task added successfully!!',
+        toaster: 'b-toaster-bottom-right',
         autoHideDelay: 5000,
         variant: 'success',
         solid: true,
-        appendToast: true,
-        toaster: 'b-toaster-bottom-right'
+        appendToast: true
       });
+      this.taskData.taskDescription = '';
     },
     async changeTaskStatus(taskId) {
       const payload = {
@@ -80,23 +68,22 @@ export default {
       this.task = this.allTasks;
       this.$store.dispatch('pageLoader/hide');
     },
-    async deleteTask() {
-      this.$refs['delete-task-modal'].hide();
+    async deleteTask(taskId, taskDescription) {
       const payload = {
         userId: this.userId,
-        taskId: this.taskID
+        taskId
       };
-      this.$store.dispatch('pageLoader/show');
+      // this.$store.dispatch('pageLoader/show');
       await this.$store.dispatch('task/deleteTask', payload);
       this.allTask();
-      this.$store.dispatch('pageLoader/hide');
-      this.$bvToast.toast(this.taskData.taskDescription, {
+      // this.$store.dispatch('pageLoader/hide');
+      this.$bvToast.toast(taskDescription, {
         title: 'Task deleted successfully!!',
+        toaster: 'b-toaster-bottom-right',
         autoHideDelay: 5000,
         variant: 'danger',
         solid: true,
-        appendToast: true,
-        toaster: 'b-toaster-bottom-right'
+        appendToast: true
       });
     },
     activeTask() {

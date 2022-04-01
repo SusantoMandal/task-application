@@ -37,10 +37,10 @@ export default {
   computed: {
     isSubmitDisable() {
       if (this.mode === 'register') {
-        return this.userData.userId.length < 0
-        || this.userData.password.length < 0 || this.userData.confirmPassword.length < 0;
+        return !this.userData.userId.length > 0
+        || !this.userData.password.length > 0 || !this.userData.confirmPassword.length > 0;
       }
-      return this.userData.userId.length < 0 || this.userData.password.length < 0;
+      return !this.userData.userId.length > 0 || !this.userData.password.length > 0;
     }
   },
   methods: {
