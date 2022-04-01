@@ -42,6 +42,11 @@ export default {
   methods: {
     setTaskId(taskId) {
       this.taskID = taskId;
+      this.$bvToast.toast(this.taskDescription, {
+        title: 'Task added successfully!!',
+        variant: 'success',
+        solid: true
+      });
     },
     closeModal() {
       this.$refs['delete-task-modal'].hide();
