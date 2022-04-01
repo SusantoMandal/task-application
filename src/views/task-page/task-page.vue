@@ -3,18 +3,28 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex';
+import { required } from 'vuelidate/lib/validators/index';
 
 export default {
   name: 'TaskPage',
   data() {
     return {
-      taskDescription: '',
+      taskData: {
+        taskDescription: ''
+      },
       taskID: '',
       hideModalFooter: true,
       hideModalheader: true,
       userId: null,
       tasks: []
     };
+  },
+  validations: {
+    taskData: {
+      taskDescription: {
+        required
+      }
+    }
   },
   computed: {
     ...mapGetters('user', ['getUserId']),
@@ -39,29 +49,50 @@ export default {
     async addTask() {
       const payload = {
         userId: this.userId,
-        description: this.taskDescription
+        description: this.taskData.taskDescription
       };
+      this.$store.dispatch('pageLoader/show');
       await this.$store.dispatch('task/addTask', payload);
-      this.taskDescription = '';
+      this.taskData.taskDescription = '';
       this.allTask();
-      // this.$refs['add-task-modal'].hide();
+      this.$store.dispatch('pageLoader/hide');
+      this.$bvToast.toast(this.taskData.taskDescription, {
+        title: 'Task added successfully!!',
+        autoHideDelay: 5000,
+        variant: 'success',
+        solid: true,
+        appendToast: true,
+        toaster: 'b-toaster-bottom-right'
+      });
     },
     async changeTaskStatus(taskId) {
       const payload = {
         userId: this.userId,
         taskId
       };
+      this.$store.dispatch('pageLoader/show');
       await this.$store.dispatch('task/updateTask', payload);
       this.task = this.allTasks;
+      this.$store.dispatch('pageLoader/hide');
     },
     async deleteTask() {
+      this.$refs['delete-task-modal'].hide();
       const payload = {
         userId: this.userId,
         taskId: this.taskID
       };
+      this.$store.dispatch('pageLoader/show');
       await this.$store.dispatch('task/deleteTask', payload);
       this.allTask();
-      this.$refs['delete-task-modal'].hide();
+      this.$store.dispatch('pageLoader/hide');
+      this.$bvToast.toast(this.taskData.taskDescription, {
+        title: 'Task deleted successfully!!',
+        autoHideDelay: 5000,
+        variant: 'danger',
+        solid: true,
+        appendToast: true,
+        toaster: 'b-toaster-bottom-right'
+      });
     },
     activeTask() {
       this.tasks = this.allTasks.filter((task) => task.completed === false);
@@ -71,9 +102,20 @@ export default {
     },
     doneTask() {
       this.tasks = this.allTasks.filter((task) => task.completed === true);
+    },
+    touchPopulatedFields() {
+      const modelFields = [
+        'taskDescription'
+      ];
+      Object.keys(this.$v.taskData).forEach((key) => {
+        if (modelFields.includes(key) && this.$v.taskData[key].$model) {
+          this.$v.taskData[key].$touch();
+        }
+      });
     }
   },
   async created() {
+    this.$store.dispatch('pageLoader/show');
     this.$store.commit('header/setShowSignButtons', false);
     this.userId = this.getUserId;
     if (this.userId == null) {
@@ -83,6 +125,10 @@ export default {
     }
     await this.$store.dispatch('task/getAllTasks', this.userId);
     this.tasks = this.allTasks;
+    this.$store.dispatch('pageLoader/hide');
+  },
+  mounted() {
+    this.touchPopulatedFields();
   }
 };
 </script>

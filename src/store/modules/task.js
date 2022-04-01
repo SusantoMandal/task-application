@@ -52,7 +52,7 @@ const task = {
         .then(async () => {
           await dispatch('getAllTasks', userId);
         })
-        .catch((error) => { console.error(error); throw error; });
+        .catch((error) => { console.error(error); });
     },
     deleteTask({ dispatch }, { userId, taskId }) {
       const config = {

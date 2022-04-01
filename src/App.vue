@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="app-container">
+  <PageLoader />
   <Header />
   <main>
     <router-view/>
@@ -8,12 +9,14 @@
 </template>
 
 <script>
+import PageLoader from '@/components/page-loader/page-loader.vue';
 import Header from './components/header/header.vue';
 
 export default {
   name: 'App',
   components: {
-    Header
+    Header,
+    PageLoader
   }
 };
 </script>

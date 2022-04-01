@@ -50,7 +50,10 @@
       color: #7e977a;
     }
   // }
-  
+  .is-invalid {
+    color:#E22B24;
+    // background-image: url("../icons/circle-error__24.svg");
+  }
   .task-link {
     a:active {
       color: yellow;

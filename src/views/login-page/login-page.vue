@@ -14,7 +14,9 @@ export default {
         name: userName,
         password: userPassword
       };
+      this.$store.dispatch('pageLoader/show');
       await this.$store.dispatch('user/loginUser', payload);
+      this.$store.dispatch('pageLoader/hide');
       this.$router.push({
         name: 'TaskPage'
       });
@@ -22,6 +24,7 @@ export default {
   },
   created() {
     this.$store.commit('header/setShowSignButtons', false);
+    this.$store.dispatch('pageLoader/hide');
   }
 };
 </script>

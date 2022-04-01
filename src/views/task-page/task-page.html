@@ -6,13 +6,27 @@
       <span class="badge bg-success">Success : {{completedTask || 0}}</span>
       <span class="badge bg-danger">Pending : {{allTasks.length - completedTask}}</span>
     </div>
-    <div class="form-group d-flex">
-      <input type="text" class ="task-add form-control" placeholder="Enter new task"v-model="taskDescription" @keydown.enter="addTask">
+    <div class="form-group">
+      <div class="d-flex">
+        <input type="text" class ="task-add form-control" placeholder="Enter new task"v-model="taskData.taskDescription" @keydown.enter="addTask" aria-describedby="description_error"
+      @focus="$v.taskData.taskDescription.$touch()">
       <!-- <button class="add-btn" @click="addTask"> -->
-        <span @click="addTask" class="my-auto">
-          <i class="fa-solid fa-circle-plus add-icon"></i>
+        <span @click="addTask" class="my-auto" :disabled="$v.taskData.taskDescription.$error">
+          <i class="fa-solid fa-circle-plus add-icon" ></i>
         </span>
-        
+      </div>
+      <div
+        id="description_error"
+        v-if="$v.taskData.taskDescription.$error"
+        >
+        <small
+          class="form-text error is-invalid"
+          v-if="!$v.taskData.taskDescription.required"
+        >
+          Please enter a task
+        </small>
+      </div>
+      
       <!-- </button> -->
       <!-- <b-icon icon="arrow-right" class="add-icon" aria-hidden="true" @click="addTask"></b-icon> -->
     </div>
