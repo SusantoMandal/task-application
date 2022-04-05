@@ -9,10 +9,11 @@ export default {
     LoginCard
   },
   methods: {
-    async registerUser(userName, userPassword) {
+    async registerUser(userName, userPassword, userEmail) {
       const payload = {
         name: userName,
-        password: userPassword
+        password: userPassword,
+        email: userEmail
       };
       this.$store.dispatch('pageLoader/show');
       await this.$store.dispatch('user/registerUser', payload);

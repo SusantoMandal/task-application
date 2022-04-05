@@ -26,7 +26,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['getUserId']),
+    ...mapGetters('user', ['getAccessToken']),
     ...mapState('task', ['allTasks']),
     completedTask() {
       let count = 0;
@@ -41,7 +41,6 @@ export default {
   methods: {
     async addTask() {
       const payload = {
-        userId: this.userId,
         description: this.taskData.taskDescription
       };
       // this.$store.dispatch('pageLoader/show');
@@ -60,7 +59,6 @@ export default {
     },
     async changeTaskStatus(taskId) {
       const payload = {
-        userId: this.userId,
         taskId
       };
       this.$store.dispatch('pageLoader/show');
@@ -70,7 +68,6 @@ export default {
     },
     async deleteTask(taskId, taskDescription) {
       const payload = {
-        userId: this.userId,
         taskId
       };
       // this.$store.dispatch('pageLoader/show');
@@ -109,13 +106,13 @@ export default {
   async created() {
     this.$store.dispatch('pageLoader/show');
     this.$store.commit('header/setShowSignButtons', false);
-    this.userId = this.getUserId;
+    this.userId = this.getAccessToken;
     if (this.userId == null) {
       this.$router.push({
         name: 'LoginPage'
       });
     }
-    await this.$store.dispatch('task/getAllTasks', this.userId);
+    await this.$store.dispatch('task/getAllTasks');
     this.tasks = this.allTasks;
     this.$store.dispatch('pageLoader/hide');
   },

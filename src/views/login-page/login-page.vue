@@ -9,9 +9,9 @@ export default {
     LoginCard
   },
   methods: {
-    async loginUser(userName, userPassword) {
+    async loginUser(userEmail, userPassword) {
       const payload = {
-        name: userName,
+        email: userEmail,
         password: userPassword
       };
       this.$store.dispatch('pageLoader/show');
@@ -20,6 +20,23 @@ export default {
       this.$router.push({
         name: 'TaskPage'
       });
+      // try {
+      //   const payload = {
+      //     email: userEmail,
+      //     password: userPassword
+      //   };
+      //   this.$store.dispatch('pageLoader/show');
+      //   await this.$store.dispatch('user/loginUser', payload);
+      //   this.$store.dispatch('pageLoader/hide');
+      //   this.$router.push({
+      //     name: 'TaskPage'
+      //   });
+      // } catch (e) {
+      //   console.log(e);
+      //   // this.$router.push({
+      //   //   name: 'LoginPage'
+      //   // });
+      // }
     }
   },
   created() {

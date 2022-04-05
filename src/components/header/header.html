@@ -12,4 +12,9 @@
       Sign up
     </button>
   </div>
+  <div v-if="showSignOutButton" class="sign-btn-container">
+    <button class="btn btn-outline-dark" @click="signOutUser">
+      Sign out
+    </button>
+  </div>
 </div>

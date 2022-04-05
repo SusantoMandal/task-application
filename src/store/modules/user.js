@@ -4,32 +4,40 @@ import LocalStorage from '../../utils/storage/local-storage';
 const user = {
   namespaced: true,
   state: {
-    userId: null
+    accessToken: null
   },
   actions: {
     loginUser({ commit }, userData) {
       return axios.post('http://localhost:8000/signin', userData)
         .then((response) => {
-          commit('setUserId', response.data.id);
+          commit('setAccessToken', response.data.accessToken);
         })
-        .catch((error) => { console.error(error); });
+        .catch((error) => {
+          console.log(error);
+          // throw new Error(error);
+          // if (error.response.status === 401) {
+          //   this.$router.push({
+          //     name: 'LoginPage'
+          //   });
+          // }
+        });
     },
     registerUser({ commit }, userData) {
       return axios.post('http://localhost:8000/signup', userData)
         .then((response) => {
-          commit('setUserId', response.data.id);
+          commit('setAccessToken', response.data.accessToken);
         })
-        .catch();
+        .catch((error) => { console.error(error); });
     }
   },
   mutations: {
-    setUserId: (state, id) => {
-      state.userId = id;
-      LocalStorage.setItem('Auth', id);
+    setAccessToken: (state, token) => {
+      state.accessToken = token;
+      LocalStorage.setItem('Auth', token);
     }
   },
   getters: {
-    getUserId: (state) => state.userId || LocalStorage.getItem('Auth')
+    getAccessToken: (state) => state.accessToken || LocalStorage.getItem('Auth')
   }
 };
 
