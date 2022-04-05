@@ -3,17 +3,27 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex';
+import { required } from 'vuelidate/lib/validators/index';
 
 export default {
   name: 'TaskPage',
   data() {
     return {
-      taskDescription: '',
-      taskID: '',
+      taskData: {
+        taskDescription: ''
+      },
       hideModalFooter: true,
       hideModalheader: true,
-      userId: null
+      userId: null,
+      tasks: []
     };
+  },
+  validations: {
+    taskData: {
+      taskDescription: {
+        required
+      }
+    }
   },
   computed: {
     ...mapGetters('user', ['getUserId']),
@@ -29,38 +39,75 @@ export default {
     }
   },
   methods: {
-    setTaskId(taskId) {
-      this.taskID = taskId;
-    },
-    closeModal() {
-      this.$refs['delete-task-modal'].hide();
-    },
     async addTask() {
       const payload = {
         userId: this.userId,
-        description: this.taskDescription
+        description: this.taskData.taskDescription
       };
+      // this.$store.dispatch('pageLoader/show');
       await this.$store.dispatch('task/addTask', payload);
-      this.taskDescription = '';
-      // this.$refs['add-task-modal'].hide();
+      this.allTask();
+      // this.$store.dispatch('pageLoader/hide');
+      this.$bvToast.toast(this.taskData.taskDescription, {
+        title: 'Task added successfully!!',
+        toaster: 'b-toaster-bottom-right',
+        autoHideDelay: 5000,
+        variant: 'success',
+        solid: true,
+        appendToast: true
+      });
+      this.taskData.taskDescription = '';
     },
     async changeTaskStatus(taskId) {
       const payload = {
         userId: this.userId,
         taskId
       };
+      this.$store.dispatch('pageLoader/show');
       await this.$store.dispatch('task/updateTask', payload);
+      this.task = this.allTasks;
+      this.$store.dispatch('pageLoader/hide');
     },
-    async deleteTask() {
+    async deleteTask(taskId, taskDescription) {
       const payload = {
         userId: this.userId,
-        taskId: this.taskID
+        taskId
       };
+      // this.$store.dispatch('pageLoader/show');
       await this.$store.dispatch('task/deleteTask', payload);
-      this.$refs['delete-task-modal'].hide();
+      this.allTask();
+      // this.$store.dispatch('pageLoader/hide');
+      this.$bvToast.toast(taskDescription, {
+        title: 'Task deleted successfully!!',
+        toaster: 'b-toaster-bottom-right',
+        autoHideDelay: 5000,
+        variant: 'danger',
+        solid: true,
+        appendToast: true
+      });
+    },
+    activeTask() {
+      this.tasks = this.allTasks.filter((task) => task.completed === false);
+    },
+    allTask() {
+      this.tasks = this.allTasks;
+    },
+    doneTask() {
+      this.tasks = this.allTasks.filter((task) => task.completed === true);
+    },
+    touchPopulatedFields() {
+      const modelFields = [
+        'taskDescription'
+      ];
+      Object.keys(this.$v.taskData).forEach((key) => {
+        if (modelFields.includes(key) && this.$v.taskData[key].$model) {
+          this.$v.taskData[key].$touch();
+        }
+      });
     }
   },
   async created() {
+    this.$store.dispatch('pageLoader/show');
     this.$store.commit('header/setShowSignButtons', false);
     this.userId = this.getUserId;
     if (this.userId == null) {
@@ -69,6 +116,11 @@ export default {
       });
     }
     await this.$store.dispatch('task/getAllTasks', this.userId);
+    this.tasks = this.allTasks;
+    this.$store.dispatch('pageLoader/hide');
+  },
+  mounted() {
+    this.touchPopulatedFields();
   }
 };
 </script>

@@ -11,7 +11,8 @@ const user = {
       return axios.post('http://localhost:8000/signin', userData)
         .then((response) => {
           commit('setUserId', response.data.id);
-        });
+        })
+        .catch((error) => { console.error(error); });
     },
     registerUser({ commit }, userData) {
       return axios.post('http://localhost:8000/signup', userData)

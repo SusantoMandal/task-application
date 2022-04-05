@@ -6,7 +6,7 @@ const task = {
     allTasks: null
   },
   actions: {
-    getAllTasks({ state }, userId) {
+    getAllTasks({ commit }, userId) {
       const config = {
         method: 'get',
         url: `http://localhost:8000/user/${userId}/tasks`,
@@ -18,7 +18,7 @@ const task = {
       const request = axios(config);
       return request
         .then((result) => {
-          state.allTasks = result.data;
+          commit('setTasks', result.data);
         })
         .catch((error) => { console.error(error); throw error; });
     },
@@ -52,7 +52,7 @@ const task = {
         .then(async () => {
           await dispatch('getAllTasks', userId);
         })
-        .catch((error) => { console.error(error); throw error; });
+        .catch((error) => { console.error(error); });
     },
     deleteTask({ dispatch }, { userId, taskId }) {
       const config = {
@@ -69,6 +69,11 @@ const task = {
           await dispatch('getAllTasks', userId);
         })
         .catch((error) => { console.error(error); throw error; });
+    }
+  },
+  mutations: {
+    setTasks: (state, data) => {
+      state.allTasks = data;
     }
   }
 };

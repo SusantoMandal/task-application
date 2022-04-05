@@ -7,6 +7,7 @@ export default {
   name: 'HomePage',
   created() {
     this.$store.commit('header/setShowSignButtons', true);
+    this.$store.dispatch('pageLoader/hide');
   }
 };
 </script>
