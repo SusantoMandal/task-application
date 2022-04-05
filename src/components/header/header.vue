@@ -3,20 +3,12 @@
 
 <script>
 import { mapState } from 'vuex';
-import localStorage from '../../utils/storage/local-storage';
 
 export default {
   name: 'Header',
   computed: {
     ...mapState('header', ['showSignButtons']),
-    showSignOutButton() {
-      const auth = localStorage.getItem('Auth');
-      console.log('auth', auth);
-      if (auth && auth !== null) {
-        return true;
-      }
-      return false;
-    }
+    ...mapState('user', ['accessToken'])
   },
   methods: {
     goToLoginPage() {
@@ -30,8 +22,7 @@ export default {
       });
     },
     async signOutUser() {
-      await localStorage.removeItem('Auth');
-      this.$store.commit('user/setAccessToken', null);
+      await this.$store.commit('user/setAccessToken', null);
       this.$router.push({
         name: 'LoginPage'
       });
