@@ -28,12 +28,29 @@ const user = {
           commit('setAccessToken', response.data.accessToken);
         })
         .catch((error) => { console.error(error); });
+    },
+    verifyAuth({ rootGetters, commit }) {
+      const config = {
+        method: 'get',
+        url: 'http://localhost:8000/authenticate',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          authorization: `Bearer ${rootGetters['user/getAccessToken']}`
+        }
+      };
+      const request = axios(config);
+      return request
+        .catch(() => { commit('removeAccessToken'); });
     }
   },
   mutations: {
     setAccessToken: (state, token) => {
       state.accessToken = token;
       LocalStorage.setItem('Auth', token);
+    },
+    removeAccessToken: (state) => {
+      LocalStorage.removeItem('Auth');
+      state.accessToken = null;
     }
   },
   getters: {
