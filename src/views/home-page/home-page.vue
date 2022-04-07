@@ -2,10 +2,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'HomePage',
-  created() {
+  computed: {
+    ...mapGetters('user', ['getAccessToken'])
+  },
+  async created() {
+    if (this.getAccessToken !== null) {
+      await this.$store.dispatch('user/verifyAuth');
+    }
     this.$store.commit('header/setShowSignButtons', true);
     this.$store.dispatch('pageLoader/hide');
   }

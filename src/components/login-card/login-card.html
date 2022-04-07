@@ -2,7 +2,7 @@
   <h3 class="login-header" v-show="mode==='register'">Register</h3>
   <h3 class="login-header" v-show="mode==='login'">Login</h3>
   <form>
-    <div class="user-name">
+    <div v-if="mode==='register'" class="user-name">
       <label for="userName" class="form-label">Name</label>
       <input 
         type="text" 
@@ -20,13 +20,41 @@
           class="form-text error is-invalid"
           v-if="!$v.userData.userId.required"
         >
-          Please tell us your name
+          Please enter your name
         </small>
         <small
           class="form-text error is-invalid"
           v-else-if="!$v.userData.userId.minLength"
         >
           Field must contain minimum three characters
+        </small>
+      </div>
+    </div>
+    <div class="user-email">
+      <label for="email" class="form-label">Enter Email</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="email" 
+        v-model="userData.email"
+        aria-describedby="email_error"
+        @blur="$v.userData.email.$touch()"
+      />
+        <div
+        id="email_error"
+        v-if="$v.userData.email.$error"
+        >
+        <small
+          class="form-text error is-invalid"
+          v-if="!$v.userData.email.required"
+        >
+          Please enter your email
+        </small>
+        <small
+          class="form-text error is-invalid"
+          v-else-if="!$v.userData.email.email"
+        >
+          Please enter valid email address
         </small>
       </div>
     </div>
