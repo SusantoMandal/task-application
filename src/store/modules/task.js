@@ -3,7 +3,7 @@ import axios from 'axios';
 const task = {
   namespaced: true,
   state: {
-    allTasks: null
+    allTasks: []
   },
   actions: {
     getAllTasks({ commit, rootGetters }) {

@@ -2,13 +2,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'Header',
   computed: {
     ...mapState('header', ['showSignButtons']),
-    ...mapState('user', ['accessToken'])
+    ...mapGetters('user', ['getAccessToken'])
   },
   methods: {
     goToLoginPage() {
@@ -22,9 +22,9 @@ export default {
       });
     },
     async signOutUser() {
-      await this.$store.commit('user/setAccessToken', null);
+      await this.$store.commit('user/removeAccessToken');
       this.$router.push({
-        name: 'LoginPage'
+        name: 'HomePage'
       });
     }
   }

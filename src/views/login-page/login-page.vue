@@ -24,29 +24,12 @@ export default {
       this.$router.push({
         name: 'TaskPage'
       });
-      // try {
-      //   const payload = {
-      //     email: userEmail,
-      //     password: userPassword
-      //   };
-      //   this.$store.dispatch('pageLoader/show');
-      //   await this.$store.dispatch('user/loginUser', payload);
-      //   this.$store.dispatch('pageLoader/hide');
-      //   this.$router.push({
-      //     name: 'TaskPage'
-      //   });
-      // } catch (e) {
-      //   console.log(e);
-      //   // this.$router.push({
-      //   //   name: 'LoginPage'
-      //   // });
-      // }
     }
   },
   async created() {
     if (this.getAccessToken !== null) {
       const result = await this.$store.dispatch('user/verifyAuth');
-      if (result.response.status === 200) {
+      if (result.status === 200) {
         this.$router.push({
           name: 'TaskPage'
         });

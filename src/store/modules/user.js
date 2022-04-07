@@ -29,7 +29,7 @@ const user = {
         })
         .catch((error) => { console.error(error); });
     },
-    verifyAuth({ rootGetters, commit }) {
+    verifyAuth({ rootGetters }) {
       const config = {
         method: 'get',
         url: 'http://localhost:8000/authenticate',
@@ -40,21 +40,27 @@ const user = {
       };
       const request = axios(config);
       return request
-        .catch(() => { commit('removeAccessToken'); });
+        .catch((error) => error);
     }
   },
   mutations: {
     setAccessToken: (state, token) => {
-      state.accessToken = token;
       LocalStorage.setItem('Auth', token);
+      state.accessToken = token;
     },
     removeAccessToken: (state) => {
+      debugger;
       LocalStorage.removeItem('Auth');
       state.accessToken = null;
+      debugger;
     }
   },
   getters: {
     getAccessToken: (state) => state.accessToken || LocalStorage.getItem('Auth')
+    // getAccessToken: (state) => {
+    //   const localToken = LocalStorage.getItem('Auth');
+    //   return state.accessToken || localToken;
+    // }
   }
 };
 

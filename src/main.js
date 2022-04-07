@@ -16,13 +16,17 @@ Vue.use(Vuelidate);
 
 axios.interceptors.response.use(
   (response) => response,
-  async (error) => {
+  (error) => {
     const errResponse = error.response;
     if (errResponse.data.code === 'ERR_203') {
-      await store.commit('user/setAccessToken', null);
-      router.push({
-        name: 'LoginPage'
-      });
+      debugger;
+      store.commit('user/removeAccessToken');
+      store.hotUpdate(store.state);
+      if (router.currentRoute.path === '/task') {
+        router.push({
+          name: 'LoginPage'
+        });
+      }
     }
     return Promise.reject(error);
   }
